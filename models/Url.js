@@ -20,6 +20,10 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     default: Date.now
   },
+  uses: {
+    type: Number,
+    required: true,
+  }
 
 }, { timestamps: true });
 

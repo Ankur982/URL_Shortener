@@ -31,6 +31,7 @@ router.post('/shorten', async (req, res) => {
                     shortUrl,
                     urlCode,
                     date: new Date(),
+                    uses: 1
                 });
                 await url.save();
                 res.json(url);
@@ -50,8 +51,12 @@ router.get('/:urlCode', async (req, res) => {
     try {
         const url = await Url.findOne({ urlCode: req.params.urlCode });
 
+        if(url.uses == 0){
+            return res.status(404).json('url is single usable please genrate new url.....!');
+        }
 
         if (url) {
+            await Url.updateOne({ urlCode: req.params.urlCode } ,{$set: { uses: 0 }})
             return res.redirect(url.longUrl);
         } else {
             return res.status(404).json('No url found.....!');
