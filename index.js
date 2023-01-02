@@ -4,6 +4,8 @@ const express = require('express');
 
 const dbConnect = require("./dbConnect");
 
+const urlRoutes = require("./routes/url")
+
 
 const cors = require("cors");
 
@@ -25,6 +27,8 @@ app.use(express.json());
 
 
 //api base routes
+
+app.use("/url", urlRoutes)
 
 
 
